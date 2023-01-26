@@ -1,7 +1,7 @@
 const { nanoid } = require('nanoid');
 const books = require('./books');
 
-const addBookHandle = (request, h) => {
+const addBookHandler = (request, h) => {
     const {
         name,
         year,
@@ -14,7 +14,9 @@ const addBookHandle = (request, h) => {
     } = request.payload;
 
     /**
-        Client tidak melampirkan properti namepada request body
+        Client tidak melampirkan properti namepada request body. Bila hal ini terjadi, maka server akan merespons dengan:
+        Status Code : 400
+        Response Body:
     */
 
     if (!name) {
@@ -28,7 +30,10 @@ const addBookHandle = (request, h) => {
     }
 
     /**
-        Client melampirkan nilai properti readPage yang lebih besar dari nilai properti pageCount.
+       Client melampirkan nilai properti readPage yang lebih besar dari nilai properti pageCount. Bila hal ini terjadi, 
+       maka server akan merespons dengan:
+        Status Code : 400
+        Response Body:
     */
 
     if (readPage > pageCount) {
@@ -82,7 +87,10 @@ const addBookHandle = (request, h) => {
     }
 
     /**
-        Server gagal memasukkan buku karena alasan umum(generic error).
+        Server gagal memasukkan buku karena alasan umum (generic error). 
+        Bila hal ini terjadi, maka server akan merespons dengan:
+            Status Code : 500
+            Response Body:
     */
 
     const response = h.response({
@@ -94,7 +102,7 @@ const addBookHandle = (request, h) => {
     return response;
 };
 
-const getAllBooksHandle = (request, h) => {
+const getAllBooksHandler = (request, h) => {
     const {
         name,
         reading,
@@ -130,7 +138,7 @@ const getAllBooksHandle = (request, h) => {
     return response;
 };
 
-const getBookByIdHandle = (request, h) => {
+const getBookByIdHandler = (request, h) => {
     const {
         id
     } = request.params;
@@ -163,7 +171,7 @@ const getBookByIdHandle = (request, h) => {
     return response;
 };
 
-const editBookByIdHandle = (request, h) => {
+const editBookByIdHandler = (request, h) => {
     const { id } = request.params;
 
     const {
@@ -251,7 +259,7 @@ const editBookByIdHandle = (request, h) => {
     return response;
 };
 
-const deleteBookByIdHandle = (request, h) => {
+const deleteBookByIdHandler = (request, h) => {
     const {
         id
     } = request.params;
@@ -287,9 +295,9 @@ const deleteBookByIdHandle = (request, h) => {
 };
 
 module.exports = {
-    addBookHandle,
-    getAllBooksHandle,
-    getBookByIdHandle,
-    editBookByIdHandle,
-    deleteBookByIdHandle
+    addBookHandler,
+    getAllBooksHandler,
+    getBookByIdHandler,
+    editBookByIdHandler,
+    deleteBookByIdHandler
 };
